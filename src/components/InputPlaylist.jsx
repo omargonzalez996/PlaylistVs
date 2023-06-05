@@ -40,10 +40,20 @@ function InputPlaylist({ setLoadedPlaylist }) {
                     type="text"
 
                 />
-                <button
-                    disabled={!buttonActive}
-                    onClick={() => console.log("perate wey")}
-                >Load Playlist</button>
+                <div className="under-input">
+                    <div className="left">
+                        <button
+                            disabled={!buttonActive}
+                            onClick={() => setLoadedPlaylist(true)}
+                        >Load Playlist</button>
+                    </div>
+                    <div className="right">
+                        <p className="input-info">{
+                            validPl == 0 ? null
+                                : validPl == 2 ? "Invalid URL" : null}</p>
+                    </div>
+                </div>
+
             </div>
         </>
     )

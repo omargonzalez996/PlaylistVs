@@ -45,7 +45,6 @@
   }
 
   button {
-    margin-top: 10px;
     padding: 10px;
     background-color: red;
     color: white;
@@ -64,4 +63,26 @@
       pointer-events: none;
     }
   }
+
+  .under-input {
+    display: flex;
+    justify-content: space-between;
+    padding: 0px;
+
+    & .left {
+      padding-top: 10px;
+      width: 90%;
+    }
+    & .right {
+      padding: 5px;
+      width: 47%;
+      display: flex;
+      align-items: start;
+      justify-content: right;
+      & .input-info {
+        color: red;
+      }
+    }
+  }
+
 }
