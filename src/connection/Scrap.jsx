@@ -12,7 +12,7 @@ export async function getPlayListID(playListUrl) {
 }
 
 export async function getPlaylistUrls(playlistId) {
-    const apiKey = 'AIzaSyCu9sjJhiTY7JCb93RMBLaWxO4GegQVm5Y';
+    const apiKey = import.meta.env.VITE_API_KEY;
     try {
         await fetch(
             `https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&maxResults=50&playlistId=${playlistId}&key=${apiKey}`

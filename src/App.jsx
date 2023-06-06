@@ -4,7 +4,7 @@ import InputPlaylist from './components/InputPlaylist'
 import { VsArena } from './components/VsArena'
 
 function App() {
-  const [loadedPlaylist, setLoadedPlaylist] = useState(true)
+  const [loadedPlaylist, setLoadedPlaylist] = useState(false)
   const [playlistURLS, setplaylistURLS] = useState([]);
 
   useEffect(() => {
