@@ -34,6 +34,7 @@ function InputPlaylist({ setLoadedPlaylist, setplaylistURLS }) {
             let playlistID = await getPlayListID(playlist) //sacar el id de la url
             console.log('PL_ID: ', playlistID);
             let urls = await getPlaylistUrls(playlistID) // obtener el array de urls de videos de la playlist
+            console.log(urls);
             setplaylistURLS(urls)
             setLoadedPlaylist(true) //cambia el estado de control en App para indicar que hay una lista de videos cargada
         } catch (error) {

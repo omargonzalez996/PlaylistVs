@@ -1,7 +1,21 @@
-export function VsArena({ playlistURLS }) {
+import { useEffect, useState } from "react"
 
-    let izq = "https://www.youtube.com/embed/MbqSMgMAzxU"
-    let der = "https://www.youtube.com/embed/MbqSMgMAzxU"
+export function VsArena({ playlistURLS }) {
+    const [izq, setIzq] = useState("")
+    const [der, setDer] = useState("")
+
+    const getRandomIndex = () => {
+        var max = playlistURLS.length - 1;
+        var randomNumInRange = Math.floor(Math.random() * (max - 0 + 1)) + 0;
+        return randomNumInRange
+    }
+
+    useEffect(() => {
+        if (playlistURLS.length >= 2) {
+            setIzq(playlistURLS[getRandomIndex()])
+            setDer(playlistURLS[getRandomIndex()])
+        }
+    }, [])
 
     return (
         <>

@@ -8,6 +8,7 @@ function App() {
   const [playlistURLS, setplaylistURLS] = useState([]);
 
   useEffect(() => {
+    typeof (playlistURLS)
     console.log(playlistURLS);
   }, [playlistURLS])
 
