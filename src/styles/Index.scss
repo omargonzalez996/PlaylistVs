@@ -73,12 +73,14 @@
       padding-top: 10px;
       width: 90%;
     }
+
     & .right {
       padding: 5px;
       width: 47%;
       display: flex;
       align-items: start;
       justify-content: right;
+
       & .input-info {
         color: red;
       }

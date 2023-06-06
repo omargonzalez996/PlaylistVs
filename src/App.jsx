@@ -1,8 +1,15 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import './styles/Index.scss'
 import InputPlaylist from './components/InputPlaylist'
+import { VsArena } from './components/VsArena'
+
 function App() {
-  const [loadedPlaylist, setLoadedPlaylist] = useState(false)
+  const [loadedPlaylist, setLoadedPlaylist] = useState(true)
+  const [playlistURLS, setplaylistURLS] = useState([]);
+
+  useEffect(() => {
+    console.log(playlistURLS);
+  }, [playlistURLS])
 
   return (
     <>
@@ -11,7 +18,7 @@ function App() {
           <h1>PlaylistVS</h1>
           <p>v0.1</p>
         </div>
-        {loadedPlaylist ? playlistCargada : <InputPlaylist setLoadedPlaylist={setLoadedPlaylist} />}
+        {loadedPlaylist ? <VsArena playlistURLS={playlistURLS} /> : <InputPlaylist setLoadedPlaylist={setLoadedPlaylist} setplaylistURLS={setplaylistURLS} />}
       </div>
     </>
   )
