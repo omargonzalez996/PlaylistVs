@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react"
 import { getPlayListID, getPlaylistUrls } from "../connection/Scrap";
 
-function InputPlaylist({ setLoadedPlaylist, setplaylistURLS }) {
+
+function InputPlaylist({ notify, setLoadedPlaylist, setplaylistURLS }) {
     var regex = /^.*(youtu.be\/|list=)([^#\&\?]*).*/;
     const [playlist, setPlaylist] = useState("")
     const [validPl, setValidPl] = useState(0)
@@ -36,6 +37,7 @@ function InputPlaylist({ setLoadedPlaylist, setplaylistURLS }) {
             let urls = await getPlaylistUrls(playlistID) // obtener el array de urls de videos de la playlist
             console.log(urls);
             setplaylistURLS(urls)
+            notify("Playlist Cargada")
             setLoadedPlaylist(true) //cambia el estado de control en App para indicar que hay una lista de videos cargada
         } catch (error) {
             console.log(error);
