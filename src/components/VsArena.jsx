@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react"
 import { RandomIndex } from "./Brackets";
 
-export function VsArena({ notify, playlistURLS, setplaylistURLS, setIsloading }) {
+export function VsArena({ setEnded, notify, playlistURLS, setplaylistURLS, setIsloading }) {
     const [izq, setIzq] = useState("")
     const [der, setDer] = useState("")
     const [leftIndex, SetLeftIndex] = useState(0);
@@ -27,14 +27,15 @@ export function VsArena({ notify, playlistURLS, setplaylistURLS, setIsloading })
     }, [rightIndex])
 
     const sortVids = () => {
-        if (condition) {
-            
-        }
         setIsloading(true)
-        console.log('sort#: ' + sortCount);
-        SetLeftIndex(RandomIndex(playlistURLS))
-        SetRightIndex(RandomIndex(playlistURLS))
-        sortCount++
+        if (playlistURLS.length > 1) {
+            console.log('sort#: ' + sortCount);
+            SetLeftIndex(RandomIndex(playlistURLS))
+            SetRightIndex(RandomIndex(playlistURLS))
+            sortCount++
+        } else {
+            setEnded(true);
+        }
         setIsloading(false)
     }
 
