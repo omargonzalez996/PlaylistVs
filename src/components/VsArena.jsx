@@ -1,52 +1,46 @@
 import { useEffect, useState } from "react"
 import { RandomIndex } from "./Brackets";
 
-export function VsArena({ notify, playlistURLS, setIsloading }) {
+export function VsArena({ notify, playlistURLS, setplaylistURLS, setIsloading }) {
     const [izq, setIzq] = useState("")
     const [der, setDer] = useState("")
     const [leftIndex, SetLeftIndex] = useState(0);
     const [rightIndex, SetRightIndex] = useState(0);
 
     let losers = []
-    let contenders = []
     let sortCount = 1
 
     useEffect(() => {
-        contenders = playlistURLS
-        if (contenders.length >= 2) {
+        if (playlistURLS.length >= 2) {
             sortVids()
         }
     }, [])
 
     useEffect(() => {
-        setIzq(contenders[leftIndex])
+        setIzq(playlistURLS[leftIndex])
         console.log(`lI: ${leftIndex}`);
     }, [leftIndex])
 
     useEffect(() => {
-        setDer(contenders[rightIndex])
+        setDer(playlistURLS[rightIndex])
         console.log(`rI: ${rightIndex}`);
     }, [rightIndex])
 
     const sortVids = () => {
+        if (condition) {
+            
+        }
         setIsloading(true)
         console.log('sort#: ' + sortCount);
-        SetLeftIndex(RandomIndex(contenders))
-        SetRightIndex(RandomIndex(contenders))
+        SetLeftIndex(RandomIndex(playlistURLS))
+        SetRightIndex(RandomIndex(playlistURLS))
         sortCount++
         setIsloading(false)
     }
 
-    const leftWins = (winnerIndex) => {
-        console.log('winner: ' + winnerIndex);
-        losers.push(rightIndex);
-        contenders.splice(rightIndex, 1);
-        sortVids()
-    }
-
-    const rightWins = (winnerIndex) => {
-        console.log('loser: ' + winnerIndex);
-        losers.push(leftIndex);
+    const RemoveLoser = (loserIndex) => {
+        losers.push(loserIndex);
+        setplaylistURLS(prevURLS => prevURLS.filter((element, index) => index !== loserIndex));
         sortVids()
     }
 
@@ -57,14 +51,14 @@ export function VsArena({ notify, playlistURLS, setIsloading }) {
                     <iframe
                         src={izq}>
                     </iframe>
-                    <button onClick={() => leftWins(leftIndex)}>{`THIS ONE: ${leftIndex}`}</button>
+                    <button onClick={() => RemoveLoser(rightIndex)}>{`THIS ONE: ${leftIndex}`}</button>
                 </div>
                 <h3 className="middle-vs">VS</h3>
                 <div className="right-corner">
                     <iframe
                         src={der}>
                     </iframe>
-                    <button onClick={() => rightWins(rightIndex)}>{`THIS ONE: ${leftIndex}`}</button>
+                    <button onClick={() => RemoveLoser(leftIndex)}>{`THIS ONE: ${rightIndex}`}</button>
                 </div>
             </div>
         </>

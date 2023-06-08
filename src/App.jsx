@@ -26,7 +26,7 @@ function App() {
           <p>v0.1</p>
         </div>
         {isLoading ? <Icon icon="line-md:loading-twotone-loop" />
-          : loadedPlaylist ? <VsArena notify={notify} playlistURLS={playlistURLS} setIsloading={setIsloading} />
+          : loadedPlaylist ? <VsArena notify={notify} playlistURLS={playlistURLS} setplaylistURLS={setplaylistURLS} setIsloading={setIsloading} />
             : <InputPlaylist notify={notify} setLoadedPlaylist={setLoadedPlaylist} setplaylistURLS={setplaylistURLS} setIsloading={setIsloading} />}
       </div>
       <ToastContainer
