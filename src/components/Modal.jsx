@@ -1,6 +1,6 @@
 
-function Modal({ onClose }) {
-    if (!isOpen) {
+function Modal({ onClose, ended }) {
+    if (ended) {
         return null;
     }
 

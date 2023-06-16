@@ -15,11 +15,6 @@ function App() {
 
   const notify = (msg) => toast(`${msg}`);
 
-  useEffect(() => {
-    typeof (playlistURLS)
-    console.log(playlistURLS);
-  }, [playlistURLS])
-
   const onClose = () => {
     notify("Reiniciando...")
     setEnded(false)
@@ -38,7 +33,7 @@ function App() {
           : loadedPlaylist ? <VsArena setEnded={setEnded} notify={notify} playlistURLS={playlistURLS} setplaylistURLS={setplaylistURLS} setIsloading={setIsloading} />
             : <InputPlaylist notify={notify} setLoadedPlaylist={setLoadedPlaylist} setplaylistURLS={setplaylistURLS} setIsloading={setIsloading} />}
       </div>
-      {ended ? <Modal onClose={onClose} /> : null}
+      {ended ? <Modal onClose={onClose} ended={ended} /> : null}
       <ToastContainer
         position="top-center"
         autoClose={5000}

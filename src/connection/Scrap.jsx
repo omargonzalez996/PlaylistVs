@@ -24,7 +24,7 @@ export async function getPlaylistUrls(playlistId) {
                 .then(data => {
                     //const videoUrls = data.items.map(item => `https://www.youtube.com/watch?v=${item.snippet.resourceId.videoId}`);
                     const videoUrls = data.items.map(item => `https://www.youtube.com/embed/${item.snippet.resourceId.videoId}`);
-                    console.log(videoUrls);
+                    //console.log(videoUrls);
                     resolve(videoUrls)
                 })
                 .catch(error => {
