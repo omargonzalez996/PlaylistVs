@@ -45,9 +45,9 @@ export function VsArena({ setEnded, playlistURLS, setIsloading }) {
 
     const RemoveLoser = (loserIndex) => {
         //console.log(`loser: ${loserIndex}`);
-        losers.push(loserIndex);
         //console.log('losers:', losers);
         //setplaylistURLS(prevURLS => prevURLS.filter((index) => index != loserIndex));
+        losers.push(loserIndex);
         contenders.splice(loserIndex, 1)
         sortVids()
         control()
