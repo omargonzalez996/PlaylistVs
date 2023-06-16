@@ -5,8 +5,8 @@ export function VsArena({ setEnded, playlistURLS, setIsloading }) {
     const [izq, setIzq] = useState()
     const [der, setDer] = useState()
     const [leftIndex, setLeftIndex] = useState(0);
-    //let leftIndex
     const [rightIndex, setRightIndex] = useState(0);
+    //let leftIndex
     //let rightIndex
     let contenders = []
     let losers = []
@@ -18,7 +18,7 @@ export function VsArena({ setEnded, playlistURLS, setIsloading }) {
 
     useEffect(() => {
         contenders = playlistURLS
-        if (contenders.length >= 2) {
+        if (contenders.length >= 2 && round == 0) {
             sortVids()
             control()
             console.log('initial:', contenders);
@@ -28,14 +28,14 @@ export function VsArena({ setEnded, playlistURLS, setIsloading }) {
     const sortVids = () => {
         setIsloading(true)
         if (contenders.length > 1) {
-            setLeftIndex(RandomIndex(contenders))
             //leftIndex = RandomIndex(contenders)
-            console.log('left: ', leftIndex);
-            setIzq(contenders[leftIndex])
-            setRightIndex(RandomIndex(contenders))
             //rightIndex = RandomIndex(contenders)
-            console.log('right: ', rightIndex);
+            setLeftIndex(RandomIndex(contenders))
+            setRightIndex(RandomIndex(contenders))
+            setIzq(contenders[leftIndex])
             setDer(contenders[rightIndex])
+            console.log('left: ', leftIndex);
+            console.log('right: ', rightIndex);
             round++
         } else {
             setEnded(true);
