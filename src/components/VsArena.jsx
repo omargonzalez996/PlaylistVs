@@ -1,61 +1,77 @@
 import { useEffect, useState } from "react"
 import { RandomIndex } from "./Brackets";
+import { Icon } from '@iconify/react';
 
-export function VsArena({ setEnded, playlistURLS, setIsloading }) {
-    const [izq, setIzq] = useState({})
-    const [der, setDer] = useState({})
-    //const [contenders, setContenders] = useState([])
-    let leftIndex
-    let rightIndex
-    let contenders = []
-    let losers = []
-    let round = 0
+export function VsArena({ setEnded, playlistURLS }) {
+    const [izq, setIzq] = useState({}) //left obj
+    const [der, setDer] = useState({}) //right obj
+    const [contenders, setContenders] = useState([]) //still in play
+    const [losers, setLosers] = useState([]) //eliminated
+    const [leftIndex, setLeftIndex] = useState(null) //left index
+    const [rightIndex, setRightIndex] = useState(null) //right index
+    const [round, setRound] = useState(0) //iteration number
+    const [isLoading, setIsLoading] = useState(false)
 
     const control = () => {
         console.log(`round: ${round} | remaining: ${contenders.length}`);
     }
 
     useEffect(() => {
-        //setContenders(playlistURLS)
-        contenders = playlistURLS
-        if (contenders.length >= 2 && round == 0) {
+        setContenders(playlistURLS)
+        if (contenders.length >= 2) {
             sortVids()
         }
     }, [])
 
+    useEffect(() => {
+        console.log('state: ', contenders);
+        console.log('losers: ', losers);
+    }, [contenders])
+
+    useEffect(() => {
+        setIzq(contenders[leftIndex])
+    }, [leftIndex])
+
+    useEffect(() => {
+        setDer(contenders[rightIndex])
+    }, [rightIndex])
+
     const sortVids = () => {
         return new Promise((resolve, reject) => {
             try {
-                setIsloading(true)
+                setIsLoading(true)
                 if (contenders.length > 1) {
-                    round++
-                    leftIndex = RandomIndex(contenders)
-                    rightIndex = RandomIndex(contenders)
-                    setIzq(contenders[leftIndex])
-                    setDer(contenders[rightIndex])
+                    setRound(prevCount => prevCount + 1)
+                    setLeftIndex(RandomIndex(contenders))
+                    setRightIndex(RandomIndex(contenders))
                     control()
                 } else {
                     setEnded(true);
-                    setIsloading(false)
                     console.log('ENDED');
                 }
-                setIsloading(false)
+                setIsLoading(false)
                 resolve()
             } catch (error) {
+                setIsLoading(false)
                 reject(console.log(error));
             }
         })
 
     }
 
-    const RemoveLoser = (loserIndex) => {
+    const RemoveLoser = (index) => {
         try {
-            console.log('click: ', loserIndex);
-            losers.push(loserIndex);
-            contenders.splice(loserIndex, 1)
-            //setContenders(prevContenders => { const updatedContenders = [...prevContenders]; updatedContenders.splice(index, 1);});
+            setLosers(prevLosers => {
+                const updatedLosers = [...prevLosers];
+                updatedLosers.push(index);
+            })
+            setContenders(prevContenders => {
+                const updatedContenders = [...prevContenders];
+                updatedContenders.splice(index, 1);
+            });
             sortVids()
-                .then(() => {
+                .then((res) => {
+                    console.log(res);
                     console.log('state: ', contenders);
                     console.log('losers: ', losers);
                 })
@@ -67,25 +83,32 @@ export function VsArena({ setEnded, playlistURLS, setIsloading }) {
     return (
         <>
             <div className="arena-container">
-                <div className="left-corner">
-                    <div className="vid-title-container">
-                        {izq.title ? <p className="vid-title">{`${izq.title}`}</p> : null}
-                    </div>
-                    <iframe
-                        src={izq.videoUrl}>
-                    </iframe>
-                    <button onClick={() => RemoveLoser(rightIndex)}>{'THIS ONE'}</button>
-                </div>
-                <h3 className="middle-vs">VS</h3>
-                <div className="right-corner">
-                    <div className="vid-title-container">
-                        {der.title ? <p className="vid-title">{`${der.title}`}</p> : null}
-                    </div>
-                    <iframe
-                        src={der.videoUrl}>
-                    </iframe>
-                    <button onClick={() => RemoveLoser(leftIndex)}>{'THIS ONE'}</button>
-                </div>
+                {isLoading ? <Icon icon="eos-icons:loading" />
+                    : (
+                        <>
+                            <div className="left-corner">
+                                <div className="vid-title-container">
+                                    {izq.title ? <p className="vid-title">{`${izq.title}`}</p> : null}
+                                </div>
+                                <iframe
+                                    src={izq.videoUrl}>
+                                </iframe>
+                                <button onClick={() => RemoveLoser(rightIndex)}>{'THIS ONE'}</button>
+                            </div>
+                            <h3 className="middle-vs">VS</h3>
+                            <div className="right-corner">
+                                <div className="vid-title-container">
+                                    {der.title ? <p className="vid-title">{`${der.title}`}</p> : null}
+                                </div>
+                                <iframe
+                                    src={der.videoUrl}>
+                                </iframe>
+                                <button onClick={() => RemoveLoser(leftIndex)}>{'THIS ONE'}</button>
+                            </div>
+                        </>
+                    )
+                }
+
             </div>
         </>
     )
