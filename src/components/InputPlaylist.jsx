@@ -12,7 +12,7 @@ function InputPlaylist({ notify, setLoadedPlaylist, setplaylistURLS }) {
 
     const updatePl = (pl) => {
         setPlaylist(pl)
-        console.log(pl);
+        //console.log(pl);
     }
 
     useEffect(() => {
@@ -31,14 +31,16 @@ function InputPlaylist({ notify, setLoadedPlaylist, setplaylistURLS }) {
 
     const loadPlaylist = async () => {
         try {
-            setButtonActive(false) // desactivar boton para evitar peticiones multiples
-            let playlistID = await getPlayListID(playlist) //sacar el id de la url
-            console.log('PL_ID: ', playlistID);
-            let urls = await getPlaylistUrls(playlistID) // obtener el array de urls de videos de la playlist
-            //console.log(urls);
-            setplaylistURLS(urls)
-            notify("Playlist Cargada")
-            setLoadedPlaylist(true) //cambia el estado de control en App para indicar que hay una lista de videos cargada
+            setButtonActive(false)
+            let playlistID = await getPlayListID(playlist)
+
+            await getPlaylistUrls(playlistID).then((data) => {
+                //console.log(data);
+                let videoData = data
+                setplaylistURLS(videoData)
+                notify("Playlist Cargada")
+                setLoadedPlaylist(true)
+            })
         } catch (error) {
             console.log(error);
         }

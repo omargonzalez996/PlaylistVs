@@ -22,10 +22,12 @@ export async function getPlaylistUrls(playlistId) {
             )
                 .then(response => response.json())
                 .then(data => {
-                    //const videoUrls = data.items.map(item => `https://www.youtube.com/watch?v=${item.snippet.resourceId.videoId}`);
-                    const videoUrls = data.items.map(item => `https://www.youtube.com/embed/${item.snippet.resourceId.videoId}`);
-                    //console.log(videoUrls);
-                    resolve(videoUrls)
+                    const videoData = data.items.map(item => ({
+                        title: `${item.snippet.title}`,
+                        videoUrl: `https://www.youtube.com/embed/${item.snippet.resourceId.videoId}`
+                    }));
+                    //console.log(videoData);
+                    resolve(videoData)
                 })
                 .catch(error => {
                     console.error('Error al cargar la playlist:', error);

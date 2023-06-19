@@ -184,3 +184,13 @@
     margin-top: 10px;
   }
 }
+
+.vid-title-container {
+  height: 50px;
+  margin-bottom: 5px;
+
+  & .vid-title {
+    font-size: 16px;
+    text-align: center;
+  }
+}
